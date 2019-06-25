@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Name>NEWAPP</Name>
+	<Description>Installs the software package along with all required prerequisite software needed.</Description>
+	<Guid>BA315218-E212-4332-8621-E28F88402B28</Guid>
+	<Version>1.1.0</Version>
+	<Commands>
+		<!--    Windows Installer 4.5 -->
+		<PrereqCommand PackageFile="Prereqs\Windows Installer 4.5\WindowsXP-KB942288-v3-x86.exe" Reboot="Immediate">
+			<Name>Windows Installer 4.5 (x86) for Windows XP</Name>
+			<Arguments>/quiet</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<FileHash>5389345C700FF4AAC0277D8B979A74180BC13D30</FileHash>
+			<InstallConditions>
+				<!-- Skip if OS is greater than XP -->
+				<OSVersionCheck CompareType="VersionGreaterThanOrEqualTo" Value="5.2"/>
+				<!-- Or Skip if the msi.dll in the system folder is greater than 4.5 -->
+				<FileCheck CompareType="VersionGreaterThanOrEqualTo" SpecialFolder="System" FileName="msiexec.exe" Version="4.5"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="General Failure. Exit Code not recognized."/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\Windows Installer 4.5\WindowsServer2003-KB942288-v4-x86.exe" Reboot="Defer">
+			<Name>Windows Installer 4.5 (x86) for Windows Server 2003</Name>
+			<Arguments>/quiet /norestart</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<FileHash>5389345C700FF4AAC0277D8B979A74180BC13D30</FileHash>
+			<InstallConditions>
+				<!-- Skip if OS is not Windows Server 2003 or XP 64-bit -->
+				<OSVersionCheck CompareType="VersionNotEqualTo" Value="5.2"/>
+				<!-- Or Skip if the msi.dll in the system folder is greater than 4.5 -->
+				<FileCheck CompareType="VersionGreaterThanOrEqualTo" SpecialFolder="System" FileName="msiexec.exe" Version="4.5"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="General Failure. Exit Code not recognized."/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\Windows Installer 4.5\Windows6.0-KB942288-v2-x86.msu" Reboot="Defer">
+			<Name>Windows Installer 4.5 (x86) for Windows Vista and Windows 7</Name>
+			<Arguments>/quiet /norestart</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<FileHash>5389345C700FF4AAC0277D8B979A74180BC13D30</FileHash>
+			<InstallConditions>
+				<!-- Skip if OS is less than Win 7  -->
+				<!-- There is no support for Vista! -->
+				<OSVersionCheck CompareType="VersionLessThan" Value="6.1"/>
+				<!-- Or Skip if the msi.dll in the system folder is greater than 4.5 -->
+				<FileCheck CompareType="VersionGreaterThanOrEqualTo" SpecialFolder="System" FileName="msiexec.exe" Version="4.5"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="General Failure. Exit Code not recognized."/>
+			</ExitCodes>
+		</PrereqCommand>
+		<!--    .NET Frameworks -->
+		<PrereqCommand PackageFile="Prereqs\Microsoft .NET Framework 3.5 Full\dotnetfx35.exe" Reboot="Defer">
+			<Name>Microsoft .NET Framework 3.5 Full</Name>
+			<Arguments>/q /norestart</Arguments>
+			<EstimatedInstalledBytes>50449456</EstimatedInstalledBytes>
+			<FileHash>58DA3D74DB353AAD03588CBB5CEA8234166D8B99</FileHash>
+			<InstallConditions>
+				<RegistryCheck CompareType="ValueEqualTo" Key="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5\Install" Value="1"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\DotNetFX40\dotNetFx40_Full_x86_x64.exe" Reboot="Defer">
+			<Name>Microsoft .NET Framework 4.0 Full</Name>
+			<Arguments>/q /norestart</Arguments>
+			<EstimatedInstalledBytes>100000</EstimatedInstalledBytes>
+			<InstallConditions>
+				<RegistryCheck CompareType="ValueEqualTo" Key="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Install" Value="1"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<!--   Visual C++ redists -->
+		<PrereqCommand PackageFile="Prereqs\VCPPRedistributables\8.0.50727.42\VCREDIST8.0.50527.42.EXE" Reboot="Defer">
+			<Name>Microsoft Visual C++ 2005 Redist 8.0.50727.42</Name>
+			<Arguments>/q:a /c:"msiexec /i vcredist.msi /qn"</Arguments>
+			<EstimatedInstalledBytes>2705744</EstimatedInstalledBytes>
+			<FileHash>1D6773537B0BABA779090C7FA29BE43D2130C3DD</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\VCPPRedistributables\8.0.59193\VCREDIST8.0.59193.EXE" Reboot="Defer">
+			<Name>Microsoft Visual C++ 2005 Redist 8.0.59193</Name>
+			<Arguments>/q:a /c:"msiexec /i vcredist.msi /qn"</Arguments>
+			<EstimatedInstalledBytes>2705744</EstimatedInstalledBytes>
+			<FileHash>1D6773537B0BABA779090C7FA29BE43D2130C3DD</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\VCPPRedistributables\8.0.56336\VCREDIST8.0.56336.EXE" Reboot="Defer">
+			<Name>Microsoft Visual C++ 2005 Redist 8.0.56336</Name>
+			<Arguments>/q:a /c:"msiexec /i vcredist.msi /qn"</Arguments>
+			<EstimatedInstalledBytes>2705744</EstimatedInstalledBytes>
+			<FileHash>1D6773537B0BABA779090C7FA29BE43D2130C3DD</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\VCPPRedistributables\9.0.30729.6161\vcredist_x86.exe" Reboot="Defer">
+			<Name>Microsoft Visual C++ 2008 Redist 9.0.30729.6161</Name>
+			<Arguments>/q:a /c:"msiexec /i vcredist.msi /qn"</Arguments>
+			<EstimatedInstalledBytes>1821192</EstimatedInstalledBytes>
+			<FileHash>56719288AB6514C07AC2088119D8A87056EEB94A</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\VCPPRedistributables\8.0.61001\vcredist_x86.exe" Reboot="Defer">
+			<Name>Microsoft Visual C++ 2005 Redist 8.0.61001</Name>
+			<Arguments>/q:a /c:"msiexec /i vcredist.msi /qn"</Arguments>
+			<EstimatedInstalledBytes>2705744</EstimatedInstalledBytes>
+			<FileHash>1D6773537B0BABA779090C7FA29BE43D2130C3DD</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<!--   Set Privs and SQL  -->
+		<PrereqCommand PackageFile="Prereqs\SecuritySettings.cmd" Reboot="Immediate">
+			<Action>Setting security privileges...</Action>
+			<Arguments>/q</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<FileHash>5389345C700FF4AAC0277D8B979A74180BC13D30</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="General Failure. Exit Code not recognized."/>
+			</ExitCodes>
+		</PrereqCommand>
+		
+		<!-- Install SQL 2008 R2 Express SP2 StandAlone -->
+		<PrereqCommand PackageFile="Prereqs\SQL 2008 R2 Express SP3\SQLEXPR_x86_ENU.exe" Reboot="Defer">
+			<Name>Microsoft SQL Server 2008 R2 Express SP2</Name>
+			<Arguments>/qs /hideconsole /ACTION=Install /FEATURES=BC,SQLEngine /INSTANCENAME=FV_SQL_SERVER /SQLSVCACCOUNT="NT AUTHORITY\SYSTEM" /BROWSERSVCSTARTUPTYPE=Automatic /SQLSYSADMINACCOUNTS="BUILTIN\ADMINISTRATORS" /SQLCOLLATION=SQL_Latin1_General_CP1_CI_AS /IAcceptSQLServerLicenseTerms /TCPENABLED=1 /NPENABLED=1</Arguments>
+			<EstimatedInstalledBytes>246929248</EstimatedInstalledBytes>
+			<FileHash>AFE1456F98437FF4510B88744A5375643A029A68</FileHash>
+			<InstallConditions>
+				<RegistryCheck CompareType="VersionGreaterThanOrEqualTo" Key="HKLM\SOFTWARE\Microsoft\Microsoft SQL Server\FV_SQL_SERVER\MSSQLServer\CurrentVersion\CurrentVersion" Value="10.0.2531.0"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<!-- Install SQL 2008 R2 SP3 Patch -->
+		<PrereqCommand PackageFile="Prereqs\SQL 2008 R2 Express SP3\SQLServer2008R2SP3-KB2979597-x86-ENU.exe" Reboot="Defer">
+			<Action>Patching Microsoft SQL Server 2008 R2 Express to Service Pack 3</Action>
+			<Arguments>/Action=Patch /IAcceptSQLServerLicenseTerms /InstanceName=FV_SQL_SERVER /QuietSimple</Arguments>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="1641"/>
+				<ExitCode Result="SuccessReboot" Message="Success" Value="3010"/>
+				<ExitCode Result="Success" Message="Success (SP3 is either already installed or there are no updates to apply)" Value="-2068643838"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrereqCommand>
+		<PrereqCommand PackageFile="Prereqs\SecuritySettings.cmd" Reboot="Defer">
+			<Action>Removing security settings...</Action>
+			<Arguments>/clean</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<DefaultExitCode Result="Fail" Message="General Failure. Exit Code not recognized."/>
+			</ExitCodes>
+		</PrereqCommand>
+		<!--   Main setup -->
+		<PrimaryCommand PackageFile="Setup.exe" Reboot="None">
+			<Name>MyCustomApp</Name>
+			<ISSFile>setup.iss</ISSFile>
+			<Arguments>/s /f1"[ISSFile]" /v"/l*v \"%LOCALAPPDATA%\MyCustomApp_ISSfile.txt\""</Arguments>
+			<EstimatedInstalledBytes>444741273</EstimatedInstalledBytes>
+			<FileHash>ED0C0822E5787D157E9DD9483A88BE2EF27202079</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrimaryCommand>
+		<!--Set to <PrimaryCommand PackageFile="Fix\pre-register.cmd" Reboot="Defer"> for no reboot. 
+				Post-fvcommand must run be ran manually though after install adn reboot-->
+		<PrimaryCommand PackageFile="Fix\post.cmd" Reboot="Immediate">
+			<Name>Fix: Re-register dll's...</Name>
+			<Arguments></Arguments>
+			<EstimatedInstalledBytes>1</EstimatedInstalledBytes>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="3010"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrimaryCommand>
+		
+		<PrimaryCommand PackageFile="..\Utilities\clean.cmd" Reboot="None">
+			<Action>Copying Users Files...</Action>
+			<Arguments>/i /clear "..\Users Guides" "C:\Program Files\MyCustomApp" "%ALLUSERSPROFILE%\Start Menu\Programs\MyCustomApp"</Arguments>
+			<EstimatedInstalledBytes>1</EstimatedInstalledBytes>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="Fail" Message="File copying failed" Value="-1"/>
+				<ExitCode Result="Fail" Message="Invalid Arguments" Value="-2"/>
+				<ExitCode Result="Success" Message="Creating shortcut failed" Value="-3"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrimaryCommand>
+	</Commands>
+</Package>

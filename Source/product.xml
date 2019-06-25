@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Name>APP NAME</Name>
+	<Description>Installs the software package along with all required prerequisite software needed.</Description>
+	<Guid>SOMEGUID</Guid>
+	<Version>VERSION</Version>
+	<Commands>
+		<!--    Windows Installer 4.5 -->
+		<PrereqCommand PackageFile="<path to file>" Reboot="Defer">
+			<Action>Name of Process</Action>
+			<Arguments>/arguments</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<FileHash>Size</FileHash>
+			<InstallConditions>
+				<!-- 
+					Install Conditions Compare Types:
+						VersionEqualTo,VersionGreaterThanOrEqualTo,VersionGreaterThan,VersionNotEqualTo,VersionLessThanOrEqualTo,VersionLessThan,
+						ValueEqualTo,ValueNotEqualTo,MatchesEqualTo,MatchesNotEqualTo"
+					Skip if registry is greater than or equal to
+				 -->
+				<RegistryCheck CompareType="VersionGreaterThanOrEqualTo" Key="<path to key>" Value="<Version>" ReEvaluate="false"/>
+				<!-- Skip if OS is greater than -->
+				<OSVersionCheck CompareType="VersionGreaterThanOrEqualTo" Value="<Version>"/>
+				<!-- 
+					Special Folders: 'System','ProgramFiles','ProgramFilesx86','SystemRoot','AllUsers','Temp'
+
+					Skip if file in the system folder is greater than
+				-->
+				<FileCheck CompareType="VersionGreaterThanOrEqualTo" SpecialFolder="System" FileName="<path to file>" Version="<Version>"/>
+			</InstallConditions>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<ExitCode Result="SuccessReboot" Message="A reboot is required." Value="1641"/>
+				<DefaultExitCode Result="Fail" Message="General Failure. Exit Code not recognized."/>
+			</ExitCodes>
+		</PrereqCommand>
+		<!--   Main setup -->
+		<PrimaryCommand PackageFile="<path to file>" Reboot="None">
+			<Name>Name of App</Name>
+			<ISSFile>optional</ISSFile>
+			<Arguments>/arguments</Arguments>
+			<EstimatedInstalledBytes>5</EstimatedInstalledBytes>
+			<FileHash>Size</FileHash>
+			<ExitCodes>
+				<ExitCode Result="Success" Message="Success" Value="0"/>
+				<DefaultExitCode Result="Fail" Message="Default Failure"/>
+			</ExitCodes>
+		</PrimaryCommand>
+		
+	</Commands>
+</Package>
